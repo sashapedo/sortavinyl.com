@@ -26,83 +26,97 @@
 @font-face{font-family:"Overused Grotesk";font-weight:500;font-display:swap;src:url(/fonts/og-Medium.woff) format("woff")}
 @font-face{font-family:"Overused Grotesk";font-weight:800;font-display:swap;src:url(/fonts/og-ExtraBold.woff) format("woff")}
 :root{
-  --bg:#f4f4f1;--card:#e8e8e4;--ink:#111112;--ink2:#66665f;--hair:rgba(17,17,18,.14);
-  --key:#111112;--keyink:#f4f4f1;--needle:#e0322b;--night:#111112;--nightink:#efefeb;--nightink2:#8f8f8a;
-  --sans:"Overused Grotesk","Helvetica Neue",Helvetica,Arial,sans-serif;--r:22px;--gut:max(16px,env(safe-area-inset-left,0px))}
+  --bg:#f6f6f3;--card:#ffffff;--ink:#111112;--ink2:#6b6b65;--hair:rgba(17,17,18,.16);
+  --key:#111112;--keyink:#f6f6f3;--needle:#e8632b;--sun:#f1e12d;--night:#111112;--nightink:#efefeb;--nightink2:#8f8f8a;
+  --sans:"Overused Grotesk","Helvetica Neue",Helvetica,Arial,sans-serif;--r:22px;--gut:max(20px,env(safe-area-inset-left,0px));--top:96px}
 @media (prefers-color-scheme:dark){:root{
-  --bg:#0b0b0b;--card:#171718;--ink:#efefeb;--ink2:#8f8f8a;--hair:rgba(255,255,255,.12);
-  --key:#efefeb;--keyink:#0b0b0b;--night:#000;color-scheme:dark}}
+  --bg:#060606;--card:#141415;--ink:#efefeb;--ink2:#8f8f8a;--hair:rgba(255,255,255,.14);
+  --key:#efefeb;--keyink:#060606;--night:#141415;color-scheme:dark}}
 *{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:var(--top)}
 html,body{margin:0}
 body{background:var(--bg);color:var(--ink);font:500 17px/1.5 var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:clip}
 img{display:block;max-width:100%;height:auto}
 a{color:inherit}
-a:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:6px}
-.wrap{max-width:1160px;margin:0 auto;padding:0 var(--gut)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1240px;margin:0 auto;padding:0 var(--gut)}
+h1,h2{margin:0;font-weight:800;letter-spacing:-.045em}
 
-/* top */
-.top{position:fixed;inset:0 0 auto;z-index:10;background:color-mix(in srgb,var(--bg) 82%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
-.top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+/* top: brand, the key, and the tuner: four stations, a needle that runs with the page */
+.top{position:fixed;inset:0 0 auto;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.top .row{display:flex;align-items:center;justify-content:space-between;height:58px}
 .brand{display:flex;align-items:center;gap:9px;text-decoration:none;font-weight:800;font-size:21px;letter-spacing:-.02em}
 .brand svg{width:26px;height:26px}
-.pill{display:inline-flex;align-items:center;height:36px;padding:0 16px;border-radius:18px;background:var(--card);font-weight:800;font-size:14px;text-decoration:none;white-space:nowrap}
-
-/* hero: the record comes out of its sleeve as you scroll */
-.hero{height:230vh;height:230svh;position:relative}
-.stage{position:sticky;top:0;height:100vh;height:100svh;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);align-items:center;gap:24px;padding-top:60px;padding-bottom:60px}
-.copy{display:flex;flex-direction:column;align-items:flex-start}
-h1{margin:0;font-weight:800;font-size:clamp(46px,7.4vw,104px);line-height:.92;letter-spacing:-.045em}
-.sub{margin:22px 0 0;max-width:24ch;font-size:clamp(18px,1.7vw,22px);line-height:1.4;color:var(--ink2)}
-.keys{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
-.key{display:inline-flex;align-items:center;height:54px;padding:0 24px;border-radius:27px;background:var(--key);color:var(--keyink);font-weight:800;font-size:16px;text-decoration:none}
-.key[aria-disabled="true"]{cursor:default}
-.record{position:relative;aspect-ratio:760/476;width:100%}
-.record img,.record canvas{position:absolute;inset:0;width:100%;height:100%}
-/* the radio scale along the foot of the hero: the needle runs with the record */
-.scale{position:absolute;left:var(--gut);right:var(--gut);bottom:max(28px,env(safe-area-inset-bottom,0px));height:22px;container-type:inline-size;
+.pill{display:inline-flex;align-items:center;height:38px;padding:0 18px;border-radius:19px;background:var(--key);color:var(--keyink);font-weight:800;font-size:14px;text-decoration:none;white-space:nowrap}
+.tuner{position:relative;height:38px;container-type:inline-size}
+.tuner .ticks{position:absolute;left:0;right:0;bottom:0;height:12px;
   background:linear-gradient(var(--ink),var(--ink)) 0 100%/100% 1px no-repeat,
-             repeating-linear-gradient(90deg,var(--ink) 0 1px,transparent 1px 12px) 0 100%/100% 8px no-repeat,
-             repeating-linear-gradient(90deg,var(--ink) 0 1.5px,transparent 1.5px 60px) 0 100%/100% 16px no-repeat;opacity:.85}
-.scale i{position:absolute;bottom:0;left:0;width:2px;height:22px;background:var(--needle);transform:translateX(calc(var(--p,0) * (100cqw - 2px)))}
+             repeating-linear-gradient(90deg,var(--ink) 0 1px,transparent 1px 10px) 0 100%/100% 5px no-repeat;opacity:.5}
+.tuner nav{position:absolute;inset:0 0 12px;display:grid;grid-template-columns:repeat(4,1fr)}
+.tuner nav a{display:flex;align-items:center;gap:6px;text-decoration:none;font-weight:800;font-size:13px;letter-spacing:.01em;color:var(--ink2);transition:color .3s}
+.tuner nav a::before{content:"";width:1.5px;height:10px;background:currentColor;margin-bottom:-14px;align-self:flex-end;display:none}
+.tuner nav a.on{color:var(--ink)}
+.tuner i{position:absolute;bottom:0;left:0;width:2px;height:24px;background:var(--needle);transform:translateX(calc(var(--p,0) * (100cqw - 2px)));transition:transform .15s linear}
 
-/* the four things */
-.things{padding-top:72px}
-.words{display:flex;flex-wrap:wrap;gap:0 .3em;margin:0 0 32px;font-weight:800;font-size:clamp(40px,7.4vw,104px);line-height:.95;letter-spacing:-.045em}
-.words span{color:var(--ink);opacity:.18;transition:opacity .5s}
-.words span.on{opacity:1}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-.tile{position:relative;overflow:hidden;border-radius:var(--r);background:var(--card);padding:30px 30px 0;display:flex;flex-direction:column;min-height:480px}
-.tile h2{margin:0;font-weight:800;font-size:clamp(34px,3.6vw,48px);line-height:1;letter-spacing:-.035em}
-.tile p{margin:12px 0 0;max-width:30ch;color:var(--ink2);font-size:18px;line-height:1.45}
-.tile .pic{margin-top:auto;padding:24px 0 30px;display:flex;justify-content:center;align-items:flex-end}
-.wide{grid-column:1/-1}
-.split{flex-direction:row;gap:30px}
-.split .txt{flex:1;padding-bottom:30px;display:flex;flex-direction:column;min-width:0}
-.night{background:var(--night);color:var(--nightink)}
-.night p{color:var(--nightink2)}
-/* a phone, drawn: the screen with its island, rising out of the tile's foot */
-.phone{position:relative;flex:none;align-self:flex-end;width:300px;height:440px;overflow:hidden;border-radius:46px 46px 0 0;padding:10px 10px 0;background:#0d0d0e}
-.phone img{width:100%;border-radius:36px 36px 0 0}
-.phone::after{content:"";position:absolute;top:21px;left:50%;width:88px;height:25px;margin-left:-44px;border-radius:13px;background:#000}
-.pic img.obj{width:min(100%,420px)}
-.pic.shelf img{width:min(100%,920px)}
-.phones{display:flex;gap:14px;align-self:flex-end}
-.phones .phone{align-self:flex-end}
-.phones .phone:first-child{height:400px}
+/* hero: the record comes out of its sleeve on a yellow ground as you scroll */
+.hero{height:220vh;height:220svh;position:relative}
+.stage{position:sticky;top:0;height:100vh;height:100svh;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:center;gap:40px;padding-top:var(--top);padding-bottom:28px}
+.copy{display:flex;flex-direction:column;align-items:flex-start}
+h1{font-size:clamp(50px,8vw,118px);line-height:.9}
+.sub{margin:24px 0 0;max-width:24ch;font-size:clamp(18px,1.6vw,22px);line-height:1.4;color:var(--ink2)}
+.keys{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:32px}
+.key{display:inline-flex;align-items:center;gap:10px;height:56px;padding:0 26px;border-radius:28px;background:var(--key);color:var(--keyink);font-weight:800;font-size:16px;text-decoration:none;transition:transform .2s}
+.key:hover{transform:translateY(-2px)}
+.key svg{width:18px;height:22px}
+.note{font-size:14px;color:var(--ink2);font-weight:800}
+.deck{position:relative;align-self:center;aspect-ratio:1.05;border-radius:var(--r);background:var(--sun);display:flex;align-items:center;justify-content:center;overflow:hidden;padding:4%}
+.record{position:relative;aspect-ratio:760/476;width:100%;max-width:760px}
+.record img,.record canvas{position:absolute;inset:0;width:100%;height:100%}
 
-/* yours */
-.yours{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:14px}
-.fact{border-radius:var(--r);background:var(--card);padding:26px 26px 28px}
-.fact b{display:block;font-weight:800;font-size:23px;letter-spacing:-.02em;line-height:1.15}
-.fact span{display:block;margin-top:8px;color:var(--ink2);font-size:16px;line-height:1.45}
+/* stations */
+.st{padding:120px 0 0}
+.st .head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:end;margin-bottom:44px}
+.st h2{font-size:clamp(56px,9vw,132px);line-height:.88}
+.st .head p{margin:0;max-width:34ch;font-size:clamp(18px,1.5vw,21px);line-height:1.45;color:var(--ink2)}
+.panel{position:relative;border-radius:var(--r);background:var(--card);overflow:hidden}
+.panel.night{background:var(--night);color:var(--nightink)}
 
-/* the end: the yellow mark */
-.end{margin:14px 0 0;border-radius:var(--r);background:var(--night);color:var(--nightink);display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);align-items:center;gap:24px;padding:56px}
-.end h2{margin:0;font-weight:800;font-size:clamp(42px,6vw,84px);line-height:.95;letter-spacing:-.045em}
-.end p{margin:16px 0 0;color:var(--nightink2);font-size:19px}
+/* a phone, drawn: the screen with its island */
+.phone{position:relative;flex:none;width:300px;aspect-ratio:660/1434;border-radius:48px;padding:10px;background:#0d0d0e;box-shadow:0 0 0 1.5px #2a2a2c inset}
+.phone img{width:100%;height:100%;object-fit:cover;border-radius:38px}
+.phone::after{content:"";position:absolute;top:22px;left:50%;width:90px;height:26px;margin-left:-45px;border-radius:13px;background:#000}
+.cut{height:520px;display:flex;align-items:flex-start;justify-content:center;gap:24px;padding-top:56px}
+.cut .phone{width:min(300px,40vw)}
+.cut .phone:nth-child(2){margin-top:80px}
+
+
+.pair{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:14px}
+.pair .panel{display:flex;align-items:flex-end;justify-content:center;min-height:560px}
+.pair .obj{width:min(88%,560px);margin:40px auto}
+.pair .phone{width:min(290px,70%);margin-bottom:-120px;margin-top:56px}
+.find{background:#2a5bd7;color:#fff}
+
+/* your colour */
+.paint{transition:background-color .5s,color .5s;padding:56px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:32px;align-items:end;background:var(--c,#e8632b);color:var(--ci,#fff)}
+.paint h2{font-size:clamp(48px,7vw,104px);line-height:.9}
+.paint p{margin:16px 0 0;max-width:30ch;font-size:19px;opacity:.82}
+.dots{display:grid;grid-template-columns:repeat(7,44px);gap:10px}
+.dots button{width:44px;height:44px;border-radius:50%;border:0;padding:0;cursor:pointer;background:var(--k);box-shadow:0 0 0 2px color-mix(in srgb,var(--ci,#fff) 55%,transparent);transition:transform .2s}
+.dots button[aria-pressed="true"]{box-shadow:0 0 0 3px var(--ci,#fff),0 0 0 6px color-mix(in srgb,var(--ci,#fff) 0%,transparent);transform:scale(1.12)}
+
+/* the spec sheet */
+.spec{margin-top:120px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1.5px solid var(--ink)}
+.spec div{padding:22px 28px 0 0}
+.spec b{display:block;font-weight:800;font-size:24px;letter-spacing:-.02em;line-height:1.15}
+.spec span{display:block;margin-top:8px;color:var(--ink2);font-size:16px;line-height:1.45;max-width:30ch}
+
+/* the end */
+.end{margin:120px 0 0;border-radius:var(--r);background:var(--night);color:var(--nightink);display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);align-items:center;gap:24px;padding:64px}
+.end h2{font-size:clamp(46px,6.6vw,96px);line-height:.92}
+.end p{margin:18px 0 0;color:var(--nightink2);font-size:19px}
 .end .key{background:var(--nightink);color:var(--night)}
 .end .key.alt{background:transparent;color:var(--nightink);box-shadow:inset 0 0 0 2px var(--nightink)}
-.end img{width:min(100%,360px);justify-self:center}
+.end img{width:min(100%,380px);justify-self:center}
 .spin{animation:spin 60s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
@@ -112,37 +126,53 @@ footer a:hover{color:var(--ink)}
 footer .brand{color:var(--ink);font-size:17px;margin-right:auto}
 footer .brand svg{width:20px;height:20px}
 
-/* things rise into place, once */
-.js .rise{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.js .rise{opacity:0;transform:translateY(32px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
 .js .rise.in{opacity:1;transform:none}
 
 @media (max-width:900px){
-  .stage{grid-template-columns:1fr;align-content:center;gap:8px}
-  .record{max-width:560px;justify-self:center}
-  .grid{grid-template-columns:1fr}
-  .split{flex-direction:column;gap:0}
-  .split .txt{padding-bottom:0}
-  .phone{align-self:center;margin-top:28px;width:min(280px,74vw);height:400px}
-  .phones{align-self:center;gap:10px;margin-top:28px}
-  .phones .phone{margin-top:0;width:min(200px,41vw);height:330px;border-radius:34px 34px 0 0;padding:7px 7px 0}
-  .phones .phone:first-child{height:300px}
-  .phones .phone img{border-radius:28px 28px 0 0}
-  .phones .phone::after{top:11px;width:48px;height:14px;margin-left:-24px}
-  .tile{min-height:0;padding:26px 24px 0}
-  .tile .pic{padding-bottom:26px}
-  .yours{grid-template-columns:1fr}
-  .end{grid-template-columns:1fr;padding:36px 24px}
-  .end img{width:min(64%,260px);order:-1}
+  :root{--top:92px}
+  .tuner nav a{font-size:12px}
+  .hero{height:200vh;height:200svh}
+  .stage{grid-template-columns:1fr;grid-template-rows:auto 1fr;align-content:stretch;gap:22px;padding-bottom:20px}
+  .copy{padding-top:18px}
+  h1{font-size:clamp(44px,12.6vw,72px)}
+  .sub{margin-top:14px}
+  .keys{margin-top:22px}
+  .deck{aspect-ratio:auto;align-self:center;padding:14% 2% 14% 4%}
+  .st{padding-top:88px}
+  .st .head{grid-template-columns:1fr;gap:16px;margin-bottom:28px}
+  .cut{height:auto;aspect-ratio:auto;padding:36px 0 0;gap:12px;max-height:440px}
+  .cut .phone{width:44vw;border-radius:30px;padding:6px}
+  .cut .phone img{border-radius:24px}
+  .cut .phone::after{top:12px;width:50px;height:15px;margin-left:-25px}
+  .cut .phone:nth-child(2){margin-top:48px}
+  .pair{grid-template-columns:1fr}
+  .pair .panel{min-height:0}
+  .pair .phone{width:min(240px,62vw);margin-bottom:-90px;border-radius:38px;padding:8px}
+  .pair .phone img{border-radius:30px}
+  .pair .phone::after{top:16px;width:64px;height:19px;margin-left:-32px}
+  .paint{grid-template-columns:1fr;padding:32px 24px}
+  .dots{grid-template-columns:repeat(7,1fr);gap:8px}
+  .dots button{width:100%;height:auto;aspect-ratio:1}
+  .spec{grid-template-columns:1fr;margin-top:88px}
+  .spec div{padding:18px 0;border-bottom:1px solid var(--hair)}
+  .end{grid-template-columns:1fr;padding:36px 24px;margin-top:88px}
+  .end img{width:min(60%,240px);order:-1}
 }
-@media (max-width:900px) and (max-height:760px){h1{font-size:clamp(40px,11vw,58px)}.keys{margin-top:20px}.sub{margin-top:14px}}
-@media (prefers-reduced-motion:reduce){.js .rise{opacity:1;transform:none;transition:none}.spin{animation:none}.words span{transition:none}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.js .rise{opacity:1;transform:none;transition:none}.spin{animation:none}.key{transition:none}}
 </style>
 </head>
 <body>
 
 <header class="top"><div class="wrap">
-  <a class="brand" href="/" aria-label="Sorta"><svg viewBox="72 72 880 880" aria-hidden="true"><path id="m" fill="currentColor" d="M652.0 476.9 L936.2 476.9 L936.2 526.6 L652.0 526.6ZM650.9 532.4 L782.1 586.8 L763.1 632.7 L631.8 578.3ZM628.6 583.2 L729.1 683.7 L693.9 718.8 L593.4 618.3ZM588.5 621.6 L642.9 752.9 L597.0 771.9 L542.6 640.6ZM536.9 641.8 L536.9 926.0 L487.1 926.0 L487.1 641.8ZM481.4 640.6 L427.0 771.9 L381.1 752.9 L435.4 621.6ZM430.6 618.3 L330.1 718.8 L294.9 683.7 L395.4 583.2ZM392.2 578.3 L260.9 632.7 L241.8 586.8 L373.1 532.4ZM372.0 526.6 L87.8 526.6 L87.8 476.9 L372.0 476.9ZM373.1 471.2 L241.8 416.8 L260.9 370.8 L392.2 425.2ZM395.4 420.4 L294.9 319.9 L330.1 284.7 L430.6 385.2ZM435.4 381.9 L381.1 250.6 L427.0 231.6 L481.4 362.9ZM487.1 361.8 L487.1 77.5 L536.9 77.5 L536.9 361.8ZM542.6 362.9 L597.0 231.6 L642.9 250.6 L588.5 381.9ZM593.4 385.2 L693.9 284.7 L729.1 319.9 L628.6 420.4ZM631.8 425.2 L763.1 370.8 L782.1 416.8 L650.9 471.2ZM788.0 565.3 L923.1 609.2 L907.8 656.5 L772.6 612.6ZM754.9 647.5 L869.8 731.0 L840.6 771.2 L725.6 687.7ZM697.9 715.4 L781.5 830.4 L741.2 859.6 L657.7 744.6ZM622.8 762.4 L666.7 897.5 L619.5 912.9 L575.5 777.8ZM448.5 777.8 L404.6 912.9 L357.3 897.5 L401.2 762.4ZM366.3 744.6 L282.8 859.6 L242.5 830.4 L326.1 715.4ZM298.4 687.7 L183.4 771.2 L154.2 731.0 L269.1 647.5ZM251.4 612.6 L116.2 656.5 L100.8 609.2 L236.0 565.3ZM236.0 438.2 L100.8 394.3 L116.2 347.0 L251.4 390.9ZM269.1 356.1 L154.2 272.5 L183.4 232.3 L298.4 315.8ZM326.1 288.1 L242.5 173.2 L282.8 143.9 L366.3 258.9ZM401.2 241.1 L357.3 106.0 L404.6 90.6 L448.5 225.8ZM575.5 225.8 L619.5 90.6 L666.7 106.0 L622.8 241.1ZM657.7 258.9 L741.2 143.9 L781.5 173.2 L697.9 288.1ZM725.6 315.8 L840.6 232.3 L869.8 272.5 L754.9 356.1ZM772.6 390.9 L907.8 347.0 L923.1 394.3 L788.0 438.2Z"/></svg>Sorta</a>
-  <a class="pill store" href="https://apps.apple.com/app/sorta/id6826957667">App Store</a>
+  <div class="row">
+    <a class="brand" href="/" aria-label="Sorta"><svg viewBox="72 72 880 880" aria-hidden="true"><path id="m" fill="currentColor" d="M652.0 476.9 L936.2 476.9 L936.2 526.6 L652.0 526.6ZM650.9 532.4 L782.1 586.8 L763.1 632.7 L631.8 578.3ZM628.6 583.2 L729.1 683.7 L693.9 718.8 L593.4 618.3ZM588.5 621.6 L642.9 752.9 L597.0 771.9 L542.6 640.6ZM536.9 641.8 L536.9 926.0 L487.1 926.0 L487.1 641.8ZM481.4 640.6 L427.0 771.9 L381.1 752.9 L435.4 621.6ZM430.6 618.3 L330.1 718.8 L294.9 683.7 L395.4 583.2ZM392.2 578.3 L260.9 632.7 L241.8 586.8 L373.1 532.4ZM372.0 526.6 L87.8 526.6 L87.8 476.9 L372.0 476.9ZM373.1 471.2 L241.8 416.8 L260.9 370.8 L392.2 425.2ZM395.4 420.4 L294.9 319.9 L330.1 284.7 L430.6 385.2ZM435.4 381.9 L381.1 250.6 L427.0 231.6 L481.4 362.9ZM487.1 361.8 L487.1 77.5 L536.9 77.5 L536.9 361.8ZM542.6 362.9 L597.0 231.6 L642.9 250.6 L588.5 381.9ZM593.4 385.2 L693.9 284.7 L729.1 319.9 L628.6 420.4ZM631.8 425.2 L763.1 370.8 L782.1 416.8 L650.9 471.2ZM788.0 565.3 L923.1 609.2 L907.8 656.5 L772.6 612.6ZM754.9 647.5 L869.8 731.0 L840.6 771.2 L725.6 687.7ZM697.9 715.4 L781.5 830.4 L741.2 859.6 L657.7 744.6ZM622.8 762.4 L666.7 897.5 L619.5 912.9 L575.5 777.8ZM448.5 777.8 L404.6 912.9 L357.3 897.5 L401.2 762.4ZM366.3 744.6 L282.8 859.6 L242.5 830.4 L326.1 715.4ZM298.4 687.7 L183.4 771.2 L154.2 731.0 L269.1 647.5ZM251.4 612.6 L116.2 656.5 L100.8 609.2 L236.0 565.3ZM236.0 438.2 L100.8 394.3 L116.2 347.0 L251.4 390.9ZM269.1 356.1 L154.2 272.5 L183.4 232.3 L298.4 315.8ZM326.1 288.1 L242.5 173.2 L282.8 143.9 L366.3 258.9ZM401.2 241.1 L357.3 106.0 L404.6 90.6 L448.5 225.8ZM575.5 225.8 L619.5 90.6 L666.7 106.0 L622.8 241.1ZM657.7 258.9 L741.2 143.9 L781.5 173.2 L697.9 288.1ZM725.6 315.8 L840.6 232.3 L869.8 272.5 L754.9 356.1ZM772.6 390.9 L907.8 347.0 L923.1 394.3 L788.0 438.2Z"/></svg>Sorta</a>
+    <a class="pill" href="https://apps.apple.com/app/sorta/id6826957667">App Store</a>
+  </div>
+  <div class="tuner" aria-label="Sections">
+    <nav><a href="#collect" data-s="collect">Collect</a><a href="#sort" data-s="sort">Sort</a><a href="#find" data-s="find">Find</a><a href="#play" data-s="play">Play</a></nav>
+    <div class="ticks" aria-hidden="true"></div><i id="needle" aria-hidden="true"></i>
+  </div>
 </div></header>
 
 <main>
@@ -151,70 +181,63 @@ footer .brand svg{width:20px;height:20px}
     <div class="copy">
       <h1>Every record in its place.</h1>
       <p class="sub">Your vinyl collection on iPhone. Built for DJs.</p>
-      <div class="keys"><a class="key store" href="https://apps.apple.com/app/sorta/id6826957667">Download on the App Store</a></div>
+      <div class="keys"><a class="key" href="https://apps.apple.com/app/sorta/id6826957667"><svg viewBox="0 0 17 21" aria-hidden="true"><path fill="currentColor" d="M14.1 11.2c0-2.6 2.1-3.8 2.2-3.9-1.2-1.8-3.1-2-3.7-2-1.6-.2-3.1.9-3.9.9-.8 0-2-.9-3.4-.9C3.6 5.4 2 6.4 1.1 8c-1.9 3.2-.5 8 1.3 10.6.9 1.3 1.9 2.7 3.3 2.6 1.3-.1 1.8-.9 3.4-.9 1.6 0 2 .9 3.4.8 1.4 0 2.3-1.3 3.2-2.6 1-1.5 1.4-2.9 1.4-3-.1 0-2.9-1.1-3-4.3zM11.5 3.5c.7-.9 1.2-2.1 1.1-3.3-1 0-2.3.7-3 1.6-.7.8-1.3 2-1.1 3.2 1.1.1 2.3-.6 3-1.5z"/></svg>Download on the App Store</a></div>
     </div>
-    <div class="record" aria-hidden="true">
-      <img src="/img/disc/00.webp" alt="" width="760" height="476" id="still">
-      <canvas id="disc"></canvas>
+    <div class="deck" aria-hidden="true">
+      <div class="record">
+        <img src="/img/disc/00.webp" alt="" width="760" height="476" id="still">
+        <canvas id="disc"></canvas>
+      </div>
     </div>
-    <div class="scale" aria-hidden="true"><i id="needle"></i></div>
   </div>
 </section>
 
-<div class="things wrap">
-  <p class="words" aria-hidden="true"><span data-w="collect">Collect.</span><span data-w="sort">Sort.</span><span data-w="find">Find.</span><span data-w="play">Play.</span></p>
+<div class="wrap">
+  <section class="st" id="collect">
+    <div class="head rise"><h2>Collect.</h2><p>Scan the barcode or the cover. Year, label, genre and the tracks of every side fill in by themselves. Then flip through your covers with your thumb.</p></div>
+    <div class="panel cut rise">
+      <div class="phone"><img src="/img/screen-row.webp" alt="The collection in Sorta: a row of record sleeves" loading="lazy" width="660" height="1434"></div>
+      <div class="phone"><img src="/img/screen-open.webp" alt="A record in Sorta: cover, disc, year, label, genre, condition and its sides" loading="lazy" width="660" height="1434"></div>
+    </div>
+  </section>
 
-  <div class="grid">
-    <article class="tile split wide rise" data-w="collect">
-      <div class="txt">
-        <h2>Collect.</h2>
-        <p>Scan the barcode or the cover. Year, label, genre and the tracks of every side fill in by themselves. Then flip through your covers with your thumb.</p>
-      </div>
-      <div class="phones">
-        <div class="phone"><img src="/img/screen-row.webp" alt="The collection in Sorta: a row of record sleeves" loading="lazy" width="660" height="1434"></div>
-        <div class="phone"><img src="/img/screen-open.webp" alt="A record in Sorta: cover, disc, year, label, genre, condition and its sides" loading="lazy" width="660" height="1434"></div>
-      </div>
-    </article>
+  <section class="st" id="sort">
+    <div class="head rise"><h2>Sort.</h2><p>Crates in birch, walnut or blue plastic, like the real ones, each with its own label. Every record keeps its place.</p></div>
+    <div class="panel rise"><img src="/img/shelf.webp" alt="Three crates full of records: birch, walnut and a blue milk crate, labelled 01, 02 and 03" loading="lazy" width="1400" height="517" style="width:min(94%,1100px);margin:48px auto 40px"></div>
+  </section>
 
-    <article class="tile rise" data-w="sort">
-      <h2>Sort.</h2>
-      <p>Crates in wood or plastic, like the real ones. Every record keeps its place.</p>
-      <div class="pic"><img class="obj" src="/img/crate-wood.webp" alt="A walnut crate full of records, with its label 02 Electronic and Ambient" loading="lazy" width="800" height="662"></div>
-    </article>
+  <section class="st" id="find">
+    <div class="head rise"><h2>Find.</h2><p>Look for a record and Sorta shows you its crate and its spot. Print labels for your real crates.</p></div>
+    <div class="pair">
+      <div class="panel rise"><img class="obj" src="/img/crate-milk.webp" alt="A blue milk crate full of records, with its label 03" loading="lazy" width="800" height="657"></div>
+      <div class="panel find rise"><div class="phone"><img src="/img/screen-box.webp" alt="A crate open in Sorta, with every record in its spot" loading="lazy" width="660" height="1434"></div></div>
+    </div>
+  </section>
 
-    <article class="tile rise" data-w="find">
-      <h2>Find.</h2>
-      <p>Look for a record and Sorta shows you its crate and its spot. Print labels for your real crates.</p>
-      <div class="pic"><img class="obj" src="/img/crate-milk.webp" alt="A blue milk crate full of records, with its label 03" loading="lazy" width="800" height="657"></div>
-    </article>
+  <section class="st" id="play">
+    <div class="head rise"><h2>Play.</h2><p>Pack the bag for tonight. After the gig, every record goes back to its crate and its spot.</p></div>
+    <div class="pair">
+      <div class="panel night rise"><div class="phone"><img src="/img/screen-bag.webp" alt="The bag in Sorta: tonight's records and where each one goes back" loading="lazy" width="660" height="1434"></div></div>
+      <div class="panel night rise"><img class="obj" src="/img/bag.webp" alt="The record bag, packed" loading="lazy" width="800" height="612"></div>
+    </div>
+  </section>
 
-    <article class="tile split night wide rise" data-w="play">
-      <div class="txt">
-        <h2>Play.</h2>
-        <p>Pack the bag for tonight. After the gig, every record goes back to its crate and its spot.</p>
-        <div class="pic"><img class="obj" src="/img/bag.webp" alt="The record bag, packed" loading="lazy" width="800" height="612"></div>
-      </div>
-      <div class="phone"><img src="/img/screen-bag.webp" alt="The bag in Sorta: tonight's records and where each one goes back" loading="lazy" width="660" height="1434"></div>
-    </article>
+  <section class="panel paint rise" style="margin-top:120px" aria-labelledby="paint-t">
+    <div><h2 id="paint-t">Your colour.</h2><p>Pick one of seven. Your keys wear it, and your friends see your page in it.</p></div>
+    <div class="dots" role="group" aria-label="Colours"></div>
+  </section>
 
-    <article class="tile wide crates rise">
-      <h2>Your crates, in 3D.</h2>
-      <p>Birch, walnut or a blue milk crate, each with its own label.</p>
-      <div class="pic shelf"><img src="/img/shelf.webp" alt="Three crates full of records: birch, walnut and a blue milk crate, labelled 01, 02 and 03" loading="lazy" width="1400" height="517"></div>
-    </article>
-  </div>
-
-  <div class="yours">
-    <div class="fact rise"><b>Private by default.</b><span>No public feed. Your collection is yours.</span></div>
-    <div class="fact rise"><b>Only your friends.</b><span>Recommend a record, lend one, share a night. Only with the friends you add.</span></div>
-    <div class="fact rise"><b>Light and dark.</b><span>Made for the shelf at home and for the dark booth.</span></div>
+  <div class="spec">
+    <div class="rise"><b>Private by default.</b><span>No public feed. Your collection is yours.</span></div>
+    <div class="rise"><b>Only your friends.</b><span>Recommend a record, lend one, share a night. Only with the friends you add.</span></div>
+    <div class="rise"><b>Light and dark.</b><span>Made for the shelf at home and for the dark booth.</span></div>
   </div>
 
   <section class="end rise" id="get" aria-labelledby="get-t">
     <div>
       <h2 id="get-t">Welcome to Sorta.</h2>
-      <p>Now on the App Store, for iPhone.</p>
-      <div class="keys"><a class="key" href="https://apps.apple.com/app/sorta/id6826957667">Download on the App Store</a><a class="key alt" href="https://instagram.com/sortavinyl">Follow @sortavinyl</a></div>
+      <p>On the App Store, for iPhone.</p>
+      <div class="keys"><a class="key" href="https://apps.apple.com/app/sorta/id6826957667"><svg viewBox="0 0 17 21" aria-hidden="true"><path fill="currentColor" d="M14.1 11.2c0-2.6 2.1-3.8 2.2-3.9-1.2-1.8-3.1-2-3.7-2-1.6-.2-3.1.9-3.9.9-.8 0-2-.9-3.4-.9C3.6 5.4 2 6.4 1.1 8c-1.9 3.2-.5 8 1.3 10.6.9 1.3 1.9 2.7 3.3 2.6 1.3-.1 1.8-.9 3.4-.9 1.6 0 2 .9 3.4.8 1.4 0 2.3-1.3 3.2-2.6 1-1.5 1.4-2.9 1.4-3-.1 0-2.9-1.1-3-4.3zM11.5 3.5c.7-.9 1.2-2.1 1.1-3.3-1 0-2.3.7-3 1.6-.7.8-1.3 2-1.1 3.2 1.1.1 2.3-.6 3-1.5z"/></svg>Download on the App Store</a><a class="key alt" href="https://instagram.com/sortavinyl">Follow @sortavinyl</a></div>
     </div>
     <img class="spin" src="/img/mark-yellow.webp" alt="" width="640" height="639" loading="lazy">
   </section>
@@ -229,9 +252,10 @@ footer .brand svg{width:20px;height:20px}
 <script>
 (() => {
   document.documentElement.classList.add('js');
-
   const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const hero = document.getElementById('hero'), cv = document.getElementById('disc'), still = document.getElementById('still'), scale = document.querySelector('.scale');
+
+  // the hero: 54 frames of the record leaving its sleeve, drawn by scroll
+  const hero = document.getElementById('hero'), cv = document.getElementById('disc'), still = document.getElementById('still');
   const N = 54, frames = [], x = cv.getContext('2d');
   let shown = -1;
   const size = () => { const r = cv.getBoundingClientRect(), d = Math.min(devicePixelRatio || 1, 2); cv.width = Math.round(r.width * d); cv.height = Math.round(r.height * d); shown = -1; tick(); };
@@ -243,23 +267,41 @@ footer .brand svg{width:20px;height:20px}
   const prog = () => { const span = hero.offsetHeight - innerHeight; return Math.min(1, Math.max(0, -hero.getBoundingClientRect().top / Math.max(1, span))); };
   function tick() {
     const p = calm ? 1 : prog(), e = p < .5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
-    scale.style.setProperty('--p', p.toFixed(4));
     let k = Math.round(e * (N - 1));
     if (k === shown) return;
     while (k >= 0 && !draw(k)) k--;
   }
   for (let k = 0; k < N; k++) { const im = new Image(); im.decoding = 'async'; im.onload = tick; im.src = `/img/disc/${String(k).padStart(2, '0')}.webp`; frames.push(im); }
-  let raf = 0;
-  addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; tick(); }); }, { passive: true });
-  addEventListener('resize', size);
-  size();
 
-  // Collect. Sort. Find. Play.: a word lights while its tile is in view; tiles rise once
-  const words = Object.fromEntries([...document.querySelectorAll('.words span')].map((s) => [s.dataset.w, s]));
-  const io = new IntersectionObserver((es) => { for (const e of es) {
-    if (e.isIntersecting) e.target.classList.add('in');
-    const w = words[e.target.dataset.w]; if (w) w.classList.toggle('on', e.isIntersecting);
-  } }, { rootMargin: '0px 0px -10% 0px', threshold: .15 });
+  // the tuner: the needle runs from Collect to Play as the page goes by
+  const tuner = document.querySelector('.tuner'), links = [...tuner.querySelectorAll('nav a')];
+  const secs = links.map((a) => document.getElementById(a.dataset.s));
+  function tune() {
+    const mid = scrollY + innerHeight * .45;
+    let p = 0, on = -1;
+    for (let i = 0; i < secs.length; i++) {
+      const t = secs[i].offsetTop, b = t + secs[i].offsetHeight;
+      if (mid >= t) { on = i; p = (i + Math.min(1, (mid - t) / Math.max(1, b - t))) / secs.length; }
+    }
+    if (on < 0) p = 0;
+    tuner.style.setProperty('--p', p.toFixed(4));
+    links.forEach((a, i) => a.classList.toggle('on', i === on));
+  }
+
+  let raf = 0;
+  addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; tick(); tune(); }); }, { passive: true });
+  addEventListener('resize', () => { size(); tune(); });
+  size(); tune();
+
+  // your colour: the seven keys of the app
+  const K = [['Ink','#151516','#eeeeeb'],['Orange','#e8632b','#fff'],['Carmine','#c8204a','#fff'],['Gold','#f2b01e','#111112'],['Green','#3d8c66','#fff'],['Blue','#2a5bd7','#fff'],['Violet','#7b69bd','#fff']];
+  const paint = document.querySelector('.paint'), dots = paint.querySelector('.dots');
+  const pick = (i) => { paint.style.setProperty('--c', K[i][1]); paint.style.setProperty('--ci', K[i][2]); for (const b of dots.children) b.setAttribute('aria-pressed', b.dataset.i == i); };
+  K.forEach(([n, c], i) => { const b = document.createElement('button'); b.type = 'button'; b.dataset.i = i; b.style.setProperty('--k', c); b.setAttribute('aria-label', n); b.onclick = () => pick(i); dots.append(b); });
+  pick(1);
+
+  // things rise into place, once
+  const io = new IntersectionObserver((es) => { for (const e of es) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }, { rootMargin: '0px 0px -8% 0px', threshold: .12 });
   for (const t of document.querySelectorAll('.rise')) io.observe(t);
 })();
 </script>
